@@ -23,7 +23,6 @@ const RequestSchema = new Schema({
     type: String
   }
 });
-
 //create model for todo
 const Request = mongoose.model("request", RequestSchema);
 

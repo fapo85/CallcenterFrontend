@@ -25,7 +25,28 @@ app.use((req, res, next) => {
   );
   next();
 });
-
+app.get('/WrongContact/list', function (req, res) {
+  mongoose.collection("request").find("zip: 00000").toArray(function(err, results) {
+    res.send(results);
+  });
+});
+app.post('/WrongContact/mark', function (req, res) {
+  var myquery = { id: req.param('id')};
+  var newvalues = { $set: {mark: true} };
+  mongoose.collection("request").updateOne(myquery, newvalues, function(err, res) {
+    if (err) throw err;
+    console.log("1 document updated");
+    db.close();
+  });
+});
+app.post('/WrongContact/delete', function (req, res) {
+  var myquery = { id: req.param('id')};
+  mongoose.collection("request").deleteOne(myquery, function(err, obj) {
+    if (err) throw err;
+    console.log("1 document deleted");
+    db.close();
+  });
+});
 app.use(bodyParser.json());
 
 app.use("/api", routes);
